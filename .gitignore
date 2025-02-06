@@ -1,1 +1,5 @@
+.venv
 .env
+.modules/__pycache__
+.modules/llm/__pycache__
+*.pyc

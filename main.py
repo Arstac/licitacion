@@ -3,12 +3,8 @@ from dotenv import load_dotenv
 import gradio as gr
 import pandas as pd
 import os
-
+import logging
 from modules import app_info, app_mats, app_price
-
-doc = "lic_2"
-
-load_dotenv()
 
 
 # #Prueba de funcionamiento de PDF a información
@@ -48,26 +44,43 @@ def buscar_precios():
     df.to_csv(output_path, index=False)
     return output_path
 
-with gr.Blocks() as app:
-    gr.Markdown("## Procesador de PDFs para Licitaciones")
-    
-    with gr.Row():
-        file1 = gr.File(label="Anuncio Lic 1 (PDF)")
-        file2 = gr.File(label="Lic 1 (PDF)")
-    
-    extract_info_btn = gr.Button("Extraer Info")
-    extract_materials_btn = gr.Button("Extraer Materiales")
-    output_csv = gr.File(label="Output CSV")
-    output_table = gr.Dataframe()
-    materials_csv = gr.File(label="Materiales CSV")
-    materials_table = gr.Dataframe()
-    
-    extract_info_btn.click(extraer_info, inputs=[file1], outputs=[output_csv, output_table])
-    extract_materials_btn.click(extraer_materiales, inputs=[file2], outputs=[materials_csv, materials_table])
-    
-    buscar_btn = gr.Button("Buscar Precios")
-    prices_csv = gr.File(label="Precios CSV")
-    
-    buscar_btn.click(buscar_precios, inputs=[], outputs=prices_csv)
 
-app.launch()
+
+
+def main():
+    load_dotenv()
+    doc = "lic_2"
+
+
+
+    try:
+        with gr.Blocks() as app:
+            gr.Markdown("## Procesador de PDFs para Licitaciones")
+            
+            with gr.Row():
+                file1 = gr.File(label="Anuncio Lic 1 (PDF)")
+                file2 = gr.File(label="Lic 1 (PDF)")
+            
+            extract_info_btn = gr.Button("Extraer Info")
+            extract_materials_btn = gr.Button("Extraer Materiales")
+            output_csv = gr.File(label="Output CSV")
+            output_table = gr.Dataframe()
+            materials_csv = gr.File(label="Materiales CSV")
+            materials_table = gr.Dataframe()
+            
+            extract_info_btn.click(extraer_info, inputs=[file1], outputs=[output_csv, output_table])
+            extract_materials_btn.click(extraer_materiales, inputs=[file2], outputs=[materials_csv, materials_table])
+            
+            buscar_btn = gr.Button("Buscar Precios")
+            prices_csv = gr.File(label="Precios CSV")
+            
+            buscar_btn.click(buscar_precios, inputs=[], outputs=prices_csv)
+
+        app.launch()
+
+    except Exception as e:
+        logging.error(f"Error al procesar el documento {doc}: {e}")
+
+
+if __name__ == "__main__":
+    main()
