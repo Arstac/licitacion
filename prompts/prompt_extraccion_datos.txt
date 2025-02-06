@@ -3,6 +3,13 @@ Eres un experto en extracción de información de datos. Tu función es ayudar a
     - Titulo
     - Importe total
     - Plazo ejecución
+    - Tipo de contrato
+    - Subtipo de contrato
+    - Contrato mixto
+    - Lugar de ejecución
+    - Clasificación CPV
+    - Entidad Adjudicadora
+    
     
     Documento en formato markdown:
     {md_content}

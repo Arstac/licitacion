@@ -1,29 +1,28 @@
+import os
+import pandas as pd
+
 from langgraph.graph import StateGraph, START, END
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 from markitdown import MarkItDown
-import os
 
-from modules.load_prompts import prompt_extraccion_datos
-from .class_models import Mat, MatOutStr, State
-import pandas as pd
+from modules.load_prompts import prompt_extraccion_materiales
+from .class_models import MatOutStr, State
+from .load_llm_models import llm
 
-api_key = os.environ["OPENAI_API_KEY"] 
 MAX_TOKENS = 500
 
-config = {
-        "configurable": {
-            "thread_id": "123" ,
-        }
-    }
-
+# config = {
+#         "configurable": {
+#             "thread_id": "123" ,
+#         }
+#     }
 
 def convert_to_md(state: State):
     md = MarkItDown()
-    result = md.convert("Data/ppt.pdf")
+    result = md.convert(f"Data/{state['doc']}.pdf")
     
     print(f"Length: {len(result.text_content)}")
 
@@ -39,7 +38,7 @@ def mats_to_excel(state: State):
     df = pd.DataFrame(materials_data)
 
     # Define the output Excel file path
-    output_file = "materials.xlsx"
+    output_file = f"Data/materiales_{state['doc']}.xlsx"
 
     # Save the DataFrame to an Excel file
     df.to_excel(output_file, index=False)
@@ -48,44 +47,12 @@ def mats_to_excel(state: State):
     
 
 def extraccion_materiales(state: State):
-    prompt_extraccion_materiales = prompt_extraccion_materiales = """Eres un ingeniero especializado en análisis de pliegos técnicos. Extrae exhaustivamente TODOS los materiales medibles mencionados incluyendo:
-- Descripción completa del material
-- Cantidad numérica exacta
-- Unidad de medida (m, m², kg, etc.)
-- Código de referencia (si existe)
-- Sección/documento donde aparece
-
-Sigue estas reglas estrictamente:
-1. Incluye solo elementos cuantificables con unidades de medida
-2. Si no se especifica cantidad, omitir el elemento
-3. Mantener fidelidad absoluta a los valores originales
-4. Especificar la ubicación exacta (página, apartado)
-5. Usar formato JSON estructurado para cada entrada
-
-Ejemplo de salida:
-{{
-  "materiales": [
-    {{
-      "descripcion": "Tubo de acero galvanizado DN 80",
-      "cantidad": 120,
-      "unidad": "metros",
-      "referencia": "ISO 65-DN80",
-      "ubicacion": "Capítulo 5, Sección 3.2.1"
-    }}
-  ]
-}}
-
-Pliego técnico:
-{pliego}
-"""
     prompt = ChatPromptTemplate.from_messages(
         [
             ("system", prompt_extraccion_materiales),
             MessagesPlaceholder(variable_name="messages"),
         ]
     )
-    
-    llm = ChatOpenAI(model="gpt-4o-mini", api_key=api_key)
     
     chain = prompt | llm.with_structured_output(MatOutStr)
     

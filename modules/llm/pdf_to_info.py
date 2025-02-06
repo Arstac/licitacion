@@ -7,15 +7,13 @@ import os
 
 from modules.load_prompts import prompt_extraccion_datos
 from .class_models import OutStr, State
+from .load_llm_models import llm
 
-api_key = os.environ["OPENAI_API_KEY"] 
-
-
-config = {
-        "configurable": {
-            "thread_id": "123" ,
-        }
-    }
+# config = {
+#         "configurable": {
+#             "thread_id": "123" ,
+#         }
+#     }
 
 def get_current_step(state: State):
     # Lógica para obtener el paso actual
@@ -23,7 +21,7 @@ def get_current_step(state: State):
 
 def convert_to_md(state: State):
     md = MarkItDown()
-    result = md.convert("Data/EjemploLicitacion.pdf")
+    result = md.convert(f"Data/anuncio_{state['doc']}.pdf")
 
     return {"md_content": result.text_content}
 
@@ -35,8 +33,6 @@ def extraccion_datos(state: State):
             MessagesPlaceholder(variable_name="messages"),
         ]
     )
-    
-    llm = ChatOpenAI(model="gpt-4o-mini", api_key=api_key)
     
     chain = prompt | llm.with_structured_output(OutStr)
     
