@@ -1,9 +1,7 @@
 from langgraph.graph import StateGraph, START, END
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_openai import ChatOpenAI
 from markitdown import MarkItDown
-import os
 
 from modules.load_prompts import prompt_extraccion_datos
 from .class_models import OutStr, State

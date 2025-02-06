@@ -1,16 +1,16 @@
-import os
 import pandas as pd
 
 from langgraph.graph import StateGraph, START, END
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_openai import ChatOpenAI
 
 from markitdown import MarkItDown
 
 from modules.load_prompts import prompt_extraccion_materiales
 from .class_models import MatOutStr, State
 from .load_llm_models import llm
+
+#from modules.utils import convert_to_md
 
 MAX_TOKENS = 500
 

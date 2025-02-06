@@ -1,21 +1,14 @@
 from langgraph.graph import StateGraph, START, END
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_openai import ChatOpenAI
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode
 
 
-from markitdown import MarkItDown
-import os
-
 from modules.load_prompts import prompt_extraccion_precios
-from .class_models import State, MatPricesOutStr, MatPrice
+from .class_models import State, MatPricesOutStr
 from .load_llm_models import llm
 import pandas as pd
-
-MAX_TOKENS = 90000
 
 # config = {
 #         "configurable": {
@@ -151,5 +144,23 @@ graph_price.add_conditional_edges(
 graph_price.add_edge("tool", "extraccion_precios")
 graph_price.add_edge("estructurar_materiales", "mats_to_excel")
 graph_price.add_edge("mats_to_excel", END)
+
+#          START
+#            |
+#            V
+# load_materiales_licitacion
+#            |
+#            V
+# extraccion_precios -> need_tool -> TOOL
+#            |     ^                  |       
+#            V     |_ _ _ _ _ _ __ _ _|
+# estructurar_materiales
+#            |
+#            V
+#      mats_to_excel
+#            |
+#            V
+#           END
+
 
 app_price = graph_price.compile()
