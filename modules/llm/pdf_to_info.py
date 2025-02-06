@@ -19,7 +19,7 @@ def get_current_step(state: State):
 
 def convert_to_md(state: State):
     md = MarkItDown()
-    result = md.convert(f"Data/anuncio_{state['doc']}.pdf")
+    result = md.convert(f"{state['doc']}")
 
     return {"md_content": result.text_content}
 
@@ -48,4 +48,4 @@ graph.add_edge(START, "convert_to_md")
 graph.add_edge("convert_to_md", "extraccion_datos")
 graph.add_edge("extraccion_datos", END)
 
-app = graph.compile()
+app_info = graph.compile()
