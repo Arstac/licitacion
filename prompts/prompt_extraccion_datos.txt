@@ -10,6 +10,5 @@ Eres un experto en extracción de información de datos. Tu función es ayudar a
     - Clasificación CPV
     - Entidad Adjudicadora
     
-    
     Documento en formato markdown:
     {md_content}
