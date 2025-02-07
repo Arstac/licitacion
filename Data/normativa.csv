@@ -1,0 +1,11 @@
+ID_instruccion,descripcion,obligatoria
+INSTR-001,Uso obligatorio de materiales certificados para la construcción,si
+INSTR-002,Aplicación de medidas de seguridad en obra,si
+INSTR-003,Cumplimiento de normativas ambientales vigentes,si
+INSTR-004,Garantía mínima de 10 años para estructuras,si
+INSTR-005,Incorporación de sistemas de eficiencia energética,si
+INSTR-006,Instalación de señalización de seguridad en todas las áreas,si
+INSTR-007,Verificación de calidad de materiales en laboratorios acreditados,si
+INSTR-008,Elaboración de un plan de mantenimiento preventivo anual,si
+INSTR-009,Uso opcional de tecnologías de realidad aumentada para supervisión remota,no
+INSTR-010,Implementación opcional de sistemas de automatización en control de acceso,no

@@ -44,7 +44,12 @@ class MatPrice(BaseModel):
     
 class MatPricesOutStr(BaseModel):
     materiales: list[MatPrice] = Field(None, title="Materiales", description="Materiales")
-    
+
+class NormativaOutStr(OutStr):
+    normativa: str = Field(None, title="Normativa", description="Descripción de la normativa")
+    cumplimiento: str = Field(None, title="Cumplimiento", description="Cumplimiento de la normativa (Igual, Contiene, No)")
+    variaciones: str = Field(None, title="Variaciones", description="Variaciones encontradas en la normativa, si aplica")
+
 class State(MessagesState):
     DataInfo: OutStr = Field(None, title="DataInfo", description="Información de los datos")
     md_content: str = Field(None, title="md_content", description="Contenido en markdown")
@@ -52,3 +57,4 @@ class State(MessagesState):
     materiales: list[Mat] = Field(None, title="Materiales", description="Materiales")
     doc: str = Field(None, title="Documento", description="Documento")    
     mat_prices: list[MatPrice] = Field(None, title="MatPrices", description="Materiales con precios")
+    cumplimiento_normativa: list[NormativaOutStr] = Field(None, title="CumplimientoNormativa", description="Cumplimiento de la normativa")

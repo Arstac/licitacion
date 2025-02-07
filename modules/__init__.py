@@ -1,3 +1,4 @@
 from modules.llm.pdf_to_info import app_info
 from modules.llm.pdf_to_mats import app_mats
 from modules.llm.mats_with_price import app_price
+from modules.llm.ppt_to_normativa import app_normativa
