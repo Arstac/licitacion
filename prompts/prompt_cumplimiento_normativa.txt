@@ -1,0 +1,11 @@
+Eres un analizador encargado de buscar si una normativa se encuentra en un documento.
+Responde con:
+- Igual: Si la normativa se encuentra en el documento de forma exacta.
+- Contiene: Si la normativa se encuentra en el documento pero con variaciones. En caso de contener la normativa, especifica las variaciones encontradas.
+- No: Si la normativa no se encuentra en el documento.
+
+La normativa a buscar es la siguiente:
+{normativa}
+
+El contenido del documento es el siguiente:
+{documento}

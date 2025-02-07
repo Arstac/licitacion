@@ -3,7 +3,7 @@ from langgraph.graph import StateGraph, START, END
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from markitdown import MarkItDown
 
-#from modules.load_prompts import prompt_cumplimiento_normativa
+from modules.load_prompts import prompt_cumplimiento_normativa
 from .class_models import State, NormativaOutStr
 from .load_llm_models import llm
 
@@ -14,25 +14,13 @@ from .load_llm_models import llm
 #     }
 
 
-prompt_cumplimiento_normativa = """Eres un analizador encargado de buscar si una normativa se encuentra en un documento.
-Responde con:
-- Igual: Si la normativa se encuentra en el documento de forma exacta.
-- Contiene: Si la normativa se encuentra en el documento pero con variaciones. En caso de contener la normativa, especifica las variaciones encontradas.
-- No: Si la normativa no se encuentra en el documento.
-
-La normativa a buscar es la siguiente:
-{normativa}
-
-El contenido del documento es el siguiente:
-{documento}
-"""
 def get_current_step(state: State):
     # Lógica para obtener el paso actual
     return state["current_step"]
 
 def convert_to_md(state: State):
     md = MarkItDown()
-    result = md.convert(f"{state['doc']}")
+    result = md.convert(f"{state['path_pliego']}")
 
     return {"md_content": result.text_content}
 

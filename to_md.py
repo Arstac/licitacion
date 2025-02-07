@@ -7,7 +7,7 @@ def convert_to_md(file_path: str):
     return result.text_content
 
 
-pdf = "Data/lic_2.pdf"
+pdf = "Data/pliego.pdf"
 markitdown = convert_to_md(pdf)
 
 print(markitdown)
