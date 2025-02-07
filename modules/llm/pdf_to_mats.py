@@ -24,7 +24,9 @@ MAX_TOKENS = 500
 
 def convert_to_md(state: State):
     md = MarkItDown()
-    result = md.convert(f"Data/{state['doc']}.pdf")
+    result = md.convert(f"{state['doc']}")
+    #En state['doc'] se guarda el path del archivo pdf, quiero extraer el nombre del archivo para guardarlo en el estado
+    
     
     print(f"Length: {len(result.text_content)}")
 
@@ -39,8 +41,10 @@ def mats_to_excel(state: State):
     # Create a DataFrame from the materials data
     df = pd.DataFrame(materials_data)
 
+    # doc_name = state['doc'].split('/')[-1].split(".")[0]
+    
     # Define the output Excel file path
-    output_file = f"Data/materiales_{state['doc']}.xlsx"
+    output_file = f"Data/materiales_lic_2.xlsx"
 
     # Save the DataFrame to an Excel file
     df.to_excel(output_file, index=False)

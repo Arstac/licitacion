@@ -1,6 +1,5 @@
 langgraph
 langchain
-markitdown
 python-dotenv
 langchain-core
 langchain-openai

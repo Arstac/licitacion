@@ -44,8 +44,8 @@ def buscador_precio(diametro: int, cantidad):
 tools = [buscador_precio]
 
 def load_materiales_licitacion(state: State):
-    doc = state["doc"]
-    materiales_licitacion = pd.read_csv(f"Data/materiales_{doc}.csv", sep=";")
+    # doc_name = state['doc'].split("/")[-1].split(".")[0]
+    materiales_licitacion = pd.read_csv(f"Data/materiales_lic_2.csv", sep=";")
     
     # Convertir a diccionario  -> pd df a dict:
     materiales = materiales_licitacion.to_dict(orient="records")
@@ -88,8 +88,9 @@ def mats_to_excel(state: State):
     # Create a DataFrame from the materials data
     df = pd.DataFrame(materials_data)
 
+    # doc_name = state['doc'].split("/")[-1].split(".")[0]
     # Define the output Excel file path
-    output_file = f"Data/materiales_{state['doc']}_prices.xlsx"
+    output_file = f"Data/materiales_lic_2_prices.xlsx"
 
     # Save the DataFrame to an Excel file
     df.to_excel(output_file, index=False)
